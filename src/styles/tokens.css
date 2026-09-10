@@ -1,0 +1,95 @@
+:root {
+  /* Brand & Navy Palette (from ReturnGuard Poster) */
+  --color-brand-navy-dark: #0D1B2A;
+  --color-brand-navy: #132238;
+  --color-brand-navy-light: #1B263B;
+  --color-brand-navy-hover: #24344E;
+  
+  /* Primary ReturnGuard Accents (Teal / Cyan) */
+  --color-brand-teal: #00BAA6;
+  --color-brand-teal-hover: #009E8D;
+  --color-brand-teal-light: #E6F8F6;
+  --color-brand-teal-border: #99E5DD;
+  --color-brand-teal-glow: rgba(0, 186, 166, 0.2);
+
+  /* Surface & Background */
+  --color-bg-app: #F8FAFC;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-subtle: #F1F5F9;
+  --color-bg-muted: #E2E8F0;
+
+  /* Text Colors */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748B;
+  --color-text-subtle: #94A3B8;
+  --color-text-inverse: #FFFFFF;
+  --color-text-inverse-muted: #94A3B8;
+
+  /* Borders & Dividers */
+  --color-border-subtle: #E2E8F0;
+  --color-border-medium: #CBD5E1;
+  --color-border-navy: #25334A;
+
+  /* Risk Semantics */
+  --color-risk-low: #10B981;
+  --color-risk-low-bg: #ECFDF5;
+  --color-risk-low-border: #A7F3D0;
+  --color-risk-low-text: #047857;
+
+  --color-risk-med: #F59E0B;
+  --color-risk-med-bg: #FFFBEB;
+  --color-risk-med-border: #FDE68A;
+  --color-risk-med-text: #B45309;
+
+  --color-risk-high: #EF4444;
+  --color-risk-high-bg: #FEF2F2;
+  --color-risk-high-border: #FECACA;
+  --color-risk-high-text: #B91C1C;
+
+  --color-risk-critical-bg: #FFF1F2;
+  --color-risk-critical-border: #FDA4AF;
+  --color-risk-critical-text: #9F1239;
+
+  --color-neutral-badge-bg: #F1F5F9;
+  --color-neutral-badge-text: #475569;
+  --color-neutral-badge-border: #CBD5E1;
+
+  /* Source Semantics */
+  --color-source-controlled-bg: #EFF6FF;
+  --color-source-controlled-text: #1D4ED8;
+  --color-source-controlled-border: #BFDBFE;
+
+  --color-source-live-bg: #F0FDF4;
+  --color-source-live-text: #15803D;
+  --color-source-live-border: #BBF7D0;
+
+  /* Elevation & Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 2px 4px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.03);
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* Typography */
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
