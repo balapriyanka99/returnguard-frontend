@@ -1,47 +1,44 @@
 import { useEffect, useState } from 'react';
 import { AppShell } from './components/layout/AppShell';
+import { ControlledCasesPage } from './pages/ControlledCasesPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { InvestigationsPage } from './pages/InvestigationsPage';
+import { ManualReviewPage } from './pages/ManualReviewPage';
 import { RaiseReturnPage } from './pages/RaiseReturnPage';
 import { ReturnInvestigationPage } from './pages/ReturnInvestigationPage';
-import { ReturnsPage } from './pages/ReturnsPage';
 
-type Route = 'overview' | 'returns' | 'raise-return' | 'investigation';
+type Route = 'overview' | 'controlled-cases' | 'investigations' | 'manual-review' | 'raise-return' | 'investigation';
+
+function resolveRoute() {
+  const path = (window.location.hash ? window.location.hash.replace(/^#\/?/, '') : window.location.pathname.replace(/^\/?/, ''));
+  if (path.startsWith('returns/')) return { route: 'investigation' as const, id: decodeURIComponent(path.slice(8)) };
+  if (path === 'overview') return { route: 'overview' as const };
+  if (path === 'investigations') return { route: 'investigations' as const };
+  if (path === 'manual-review') return { route: 'manual-review' as const };
+  if (path === 'raise-return') return { route: 'raise-return' as const };
+  return { route: 'controlled-cases' as const };
+}
 
 export function App() {
-  const [route, setRoute] = useState<Route>('returns');
-  const [returnId, setReturnId] = useState('RTN-M08-002');
-
+  const initial = resolveRoute();
+  const [route, setRoute] = useState<Route>(initial.route);
+  const [returnId, setReturnId] = useState(initial.id || 'RTN-M08-002');
   useEffect(() => {
-    const sync = () => {
-      const path = (window.location.hash ? window.location.hash.replace(/^#\/?/, '') : window.location.pathname.replace(/^\/?/, ''));
-      if (path.startsWith('returns/')) {
-        setReturnId(decodeURIComponent(path.slice('returns/'.length)));
-        setRoute('investigation');
-      } else if (path === 'raise-return') setRoute('raise-return');
-      else if (path === 'overview') setRoute('overview');
-      else setRoute('returns');
-    };
-    sync();
-    window.addEventListener('hashchange', sync);
-    window.addEventListener('popstate', sync);
+    const sync = () => { const next = resolveRoute(); setRoute(next.route); if (next.id) setReturnId(next.id); };
+    window.addEventListener('hashchange', sync); window.addEventListener('popstate', sync);
     return () => { window.removeEventListener('hashchange', sync); window.removeEventListener('popstate', sync); };
   }, []);
-
   const navigate = (path: string) => { window.history.pushState({}, '', path); window.dispatchEvent(new PopStateEvent('popstate')); };
   const openReturn = (id: string) => navigate(`/returns/${encodeURIComponent(id)}`);
   const active = route === 'investigation' ? 'investigations' : route;
-
-  return (
-    <AppShell currentTab={active} onSelectTab={(tab) => {
-      if (tab === 'investigations' || tab === 'ask') openReturn('RTN-M08-002');
-      else navigate(`/${tab}`);
-    }} onRaiseReturnClick={() => navigate('/raise-return')}>
-      {route === 'returns' && <ReturnsPage onSelectReturn={openReturn} onRaiseReturnClick={() => navigate('/raise-return')} />}
-      {route === 'investigation' && <ReturnInvestigationPage returnId={returnId} onBack={() => navigate('/returns')} />}
-      {route === 'raise-return' && <RaiseReturnPage onBack={() => navigate('/returns')} onCreated={openReturn} />}
-      {route === 'overview' && <DashboardPage onSelectReturn={openReturn} onNavigateToReturns={() => navigate('/returns')} onRaiseReturnClick={() => navigate('/raise-return')} />}
-    </AppShell>
-  );
+  return <AppShell currentTab={active} onSelectTab={(tab) => navigate(`/${tab}`)}>
+    {route === 'overview' && <DashboardPage onNavigate={navigate} onSelectReturn={openReturn}/>}
+    {route === 'controlled-cases' && <ControlledCasesPage onSelectReturn={openReturn}/>}
+    {route === 'investigations' && <InvestigationsPage onSelectReturn={openReturn}/>}
+    {route === 'manual-review' && <ManualReviewPage onSelectReturn={openReturn}/>}
+    {route === 'raise-return' && <RaiseReturnPage onBack={() => navigate('/investigations')} onCreated={openReturn}/>}
+    {route === 'investigation' && <ReturnInvestigationPage returnId={returnId} onBack={() => navigate('/investigations')}/>}
+  </AppShell>;
 }
 
 export default App;

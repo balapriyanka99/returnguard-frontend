@@ -6,16 +6,12 @@ export interface AppShellProps {
   children: React.ReactNode;
   currentTab: string;
   onSelectTab: (tab: string) => void;
-  onRaiseReturnClick: () => void;
-  onSearchChange?: (val: string) => void;
 }
 
 export const AppShell: React.FC<AppShellProps> = ({
   children,
   currentTab,
-  onSelectTab,
-  onRaiseReturnClick,
-  onSearchChange
+  onSelectTab
 }) => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', width: '100%', backgroundColor: 'var(--color-bg-app)' }}>
@@ -24,10 +20,7 @@ export const AppShell: React.FC<AppShellProps> = ({
 
       {/* Main Body */}
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
-        <TopBar
-          onRaiseReturnClick={onRaiseReturnClick}
-          onSearchChange={onSearchChange}
-        />
+        <TopBar />
         <main className="app-main">
           {children}
         </main>
