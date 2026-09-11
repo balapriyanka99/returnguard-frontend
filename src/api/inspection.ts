@@ -7,6 +7,5 @@ export async function saveInspection(returnId: string, draft: InspectionDraft): 
     await new Promise((resolve) => setTimeout(resolve, 100));
     return saveMockInspection(returnId, draft);
   }
-  throw new Error('Physical inspection write contract is not available yet.');
+  throw new Error('Physical inspection submission is unavailable in real API mode because no FastAPI inspection write contract is currently defined.');
 }
-

@@ -35,6 +35,7 @@ export interface ReturnRiskSummary {
 
 export interface ReturnSummaryItem {
   return_id: string;
+  case_type?: 'CONTROLLED' | 'SOURCE_BACKED';
   source_type: SourceType;
   customer: ReturnCustomerSummary;
   order_id: number;
@@ -96,6 +97,7 @@ export interface DashboardResponse {
   risk_distribution: DashboardRiskDistribution;
   financials: DashboardFinancials;
   recent_returns: ReturnSummaryItem[];
+  attention_returns?: ReturnSummaryItem[];
 }
 
 // ------------------------------------------------------------
@@ -224,8 +226,12 @@ export interface SignalContribution {
 export interface RiskData {
   score: number;
   band: RiskBand;
+  coverage?: string;
+  group_scores?: Record<string, number>;
+  product_mitigation?: number;
   reason_codes: string[];
   signal_contributions: SignalContribution[];
+  patterns?: string[];
   limitations: string[];
 }
 
@@ -240,6 +246,9 @@ export interface DecisionData {
   refund_timeline?: string;
   limitations: string[];
   status: string;
+  matched_policy_rule?: string;
+  strongest_evidence?: string[];
+  mitigating_context?: string[];
 }
 
 export interface VisionFinding {
@@ -380,6 +389,8 @@ export interface SourceOrderItemsResponse {
 
 export interface CreateReturnRequest {
   order_item_id: number;
+  customer_id?: number;
+  order_id?: number;
   reason: string;
   comment?: string;
 }
@@ -415,4 +426,6 @@ export interface AskReturnGuardResponse {
   tools_used: string[];
   key_evidence: KeyEvidenceItem[];
   limitations: string[];
+  trace_id?: string;
+  assessment_id?: string;
 }

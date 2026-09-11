@@ -7,7 +7,8 @@ import {
 import {
   getReturnDetail,
   getReturnAssessmentHistory,
-  getReturnTimelineEvents
+  getReturnTimelineEvents,
+  investigateReturn
 } from '../api/investigations';
 
 export function useReturnInvestigation(returnId: string) {
@@ -16,6 +17,7 @@ export function useReturnInvestigation(returnId: string) {
   const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [investigating, setInvestigating] = useState(false);
 
   const fetchData = useCallback(async () => {
     if (!returnId) return;
@@ -41,12 +43,28 @@ export function useReturnInvestigation(returnId: string) {
     fetchData();
   }, [fetchData]);
 
+  const investigate = useCallback(async () => {
+    if (!detail) return;
+    setInvestigating(true);
+    setError(null);
+    try {
+      await investigateReturn(returnId, detail.return.assessment_at);
+      await fetchData();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Investigation failed');
+    } finally {
+      setInvestigating(false);
+    }
+  }, [detail, fetchData, returnId]);
+
   return {
     detail,
     history,
     timeline,
     loading,
     error,
-    refresh: fetchData
+    refresh: fetchData,
+    investigate,
+    investigating
   };
 }

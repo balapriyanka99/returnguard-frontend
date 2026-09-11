@@ -7,6 +7,5 @@ export async function simulateLifecycleEvent(returnId: string, event: DemoLifecy
     await new Promise((resolve) => setTimeout(resolve, 90));
     return simulateMockLifecycleEvent(returnId, event);
   }
-  throw new Error('Demo lifecycle write contract is not available yet.');
+  throw new Error('Lifecycle update is unavailable in real API mode because no FastAPI lifecycle write contract is currently defined.');
 }
-

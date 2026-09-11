@@ -116,6 +116,7 @@ export async function getReturnTimelineEvents(
     return [...(mockTimelineEventsMap[returnId] || []), ...getMockTimelineEvents(returnId)];
   }
 
-  // No timeline endpoint is present in the coordination contract yet.
-  return [];
+  return apiFetch<TimelineEvent[]>(
+    `/api/returns/${encodeURIComponent(returnId)}/timeline`
+  );
 }

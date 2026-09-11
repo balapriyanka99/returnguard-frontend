@@ -45,8 +45,9 @@ export function getMockInspection(returnId: string): InspectionDraft | null {
 }
 
 export function saveMockInspection(returnId: string, draft: InspectionDraft): InspectionDraft {
-  inspectionState[returnId] = draft;
   const now = draft.inspection.inspected_at || new Date().toISOString();
+  const savedDraft = { ...draft, inspection: { ...draft.inspection, inspected_at: now } };
+  inspectionState[returnId] = savedDraft;
   const events = lifecycleState[returnId]?.events || [];
   const event: TimelineEvent = {
     id: `mock-inspection-${returnId}-${Date.now()}`,
@@ -60,12 +61,12 @@ export function saveMockInspection(returnId: string, draft: InspectionDraft): In
     severity: 'normal'
   };
   lifecycleState[returnId] = {
-    status: 'Under Review',
+    status: 'Inspection Complete · Under Review',
     updated_at: now,
     events: [...events.filter((item) => item.title !== event.title), event]
   };
   persist();
-  return draft;
+  return savedDraft;
 }
 
 export function getMockLifecycle(returnId: string): DemoLifecycleState | null {
@@ -75,7 +76,10 @@ export function getMockLifecycle(returnId: string): DemoLifecycleState | null {
 export function simulateMockLifecycleEvent(returnId: string, event: DemoLifecycleEvent): DemoLifecycleState {
   const now = new Date().toISOString();
   const current = lifecycleState[returnId];
-  const status = event === 'pickup_complete' ? 'In Transit' : 'Awaiting Physical Inspection';
+  if (event === 'warehouse_received' && current?.status !== 'Pickup Complete') {
+    throw new Error('Pickup must be completed before warehouse receipt can be recorded.');
+  }
+  const status = event === 'pickup_complete' ? 'Pickup Complete' : 'Warehouse Received';
   const title = event === 'pickup_complete' ? 'Pickup completed' : 'Warehouse received';
   const timelineEvent: TimelineEvent = {
     id: `mock-lifecycle-${returnId}-${event}-${Date.now()}`,
