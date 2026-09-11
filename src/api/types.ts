@@ -45,6 +45,9 @@ export interface ReturnSummaryItem {
   requested_at: string;
   assessment_at: string | null;
   risk: ReturnRiskSummary | null;
+  decision?: string | null;
+  previous_risk?: ReturnRiskSummary | null;
+  reason_for_attention?: string;
 }
 
 export interface ReturnsListResponse {
@@ -73,6 +76,8 @@ export interface DashboardCounts {
   needs_review: number | null;
   auto_approved: number | null;
   rejected: number | null;
+  awaiting_inspection?: number | null;
+  completed?: number | null;
 }
 
 export interface DashboardRiskDistribution {
@@ -263,6 +268,7 @@ export interface ReturnDetailResponse {
   decision: DecisionData | null;
   vision: VisionData | null;
   limitations: string[];
+  evidence_coverage?: 'sufficient' | 'partial' | 'insufficient' | 'pending';
 }
 
 // ------------------------------------------------------------
@@ -306,6 +312,32 @@ export interface TimelineEvent {
   facts: string[];
   source_indicator: string;
   severity?: 'normal' | 'flag' | 'success';
+}
+
+export type ManualReviewAction =
+  | 'APPROVE'
+  | 'REJECT'
+  | 'REQUEST_MORE_EVIDENCE'
+  | 'REQUIRE_PHYSICAL_INSPECTION'
+  | 'ESCALATE';
+
+export interface ManualReviewState {
+  action: ManualReviewAction;
+  notes?: string;
+  updated_at: string;
+}
+
+export type DemoLifecycleEvent = 'pickup_complete' | 'warehouse_received';
+
+export interface DemoLifecycleState {
+  status: string;
+  updated_at: string;
+  events: TimelineEvent[];
+}
+
+export interface InspectionDraft {
+  inspection: InspectionData;
+  inspector_notes?: string;
 }
 
 // ------------------------------------------------------------

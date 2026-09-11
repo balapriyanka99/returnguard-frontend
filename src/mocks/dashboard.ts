@@ -3,17 +3,19 @@ import { mockReturnsList } from './returns';
 
 export const mockDashboardData: DashboardResponse = {
   counts: {
-    total_returns: 82,
-    controlled_returns: 80,
-    source_backed_returns: 2,
-    needs_review: null,
-    auto_approved: null,
-    rejected: null
+    total_returns: mockReturnsList.length,
+    controlled_returns: mockReturnsList.filter((item) => item.source_type === 'controlled').length,
+    source_backed_returns: mockReturnsList.filter((item) => item.source_type === 'source_backed').length,
+    needs_review: mockReturnsList.filter((item) => item.status.toLowerCase().includes('review')).length,
+    auto_approved: mockReturnsList.filter((item) => item.decision === 'AUTO_APPROVE').length,
+    rejected: mockReturnsList.filter((item) => item.decision === 'REJECT_OR_ESCALATE').length,
+    awaiting_inspection: mockReturnsList.filter((item) => item.status.toLowerCase().includes('awaiting physical inspection')).length,
+    completed: mockReturnsList.filter((item) => item.status.toLowerCase().includes('completed')).length
   },
   risk_distribution: {
-    low: null,
-    medium: null,
-    high: null
+    low: mockReturnsList.filter((item) => item.risk?.band === 'low').length,
+    medium: mockReturnsList.filter((item) => item.risk?.band === 'medium').length,
+    high: mockReturnsList.filter((item) => item.risk?.band === 'high' || item.risk?.band === 'critical').length
   },
   financials: {
     potential_exposure: null,

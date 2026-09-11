@@ -40,6 +40,10 @@ export const EvidenceTimeline: React.FC<EvidenceTimelineProps> = ({ events }) =>
         {events.map((evt, idx) => {
           const isLast = idx === events.length - 1;
           const isFlag = evt.severity === 'flag';
+          const isSuccess = evt.severity === 'success';
+          const accent = isFlag ? 'var(--color-risk-high)' : isSuccess ? 'var(--color-risk-low)' : 'var(--color-brand-teal)';
+          const background = isFlag ? '#FFF8F8' : isSuccess ? '#F3FBF7' : 'var(--color-bg-subtle)';
+          const border = isFlag ? 'var(--color-risk-high-border)' : isSuccess ? 'var(--color-risk-low-border)' : 'var(--color-border-subtle)';
 
           return (
             <div key={evt.id || idx} style={{ display: 'flex', gap: '14px', position: 'relative' }}>
@@ -50,12 +54,12 @@ export const EvidenceTimeline: React.FC<EvidenceTimelineProps> = ({ events }) =>
                     width: '24px',
                     height: '24px',
                     borderRadius: '50%',
-                    backgroundColor: isFlag ? 'var(--color-risk-high-bg)' : 'var(--color-brand-teal-light)',
-                    border: `1.5px solid ${isFlag ? 'var(--color-risk-high)' : 'var(--color-brand-teal)'}`,
+                    backgroundColor: isFlag ? 'var(--color-risk-high-bg)' : isSuccess ? 'var(--color-risk-low-bg)' : 'var(--color-brand-teal-light)',
+                    border: `1.5px solid ${accent}`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: isFlag ? 'var(--color-risk-high)' : 'var(--color-brand-teal)',
+                    color: accent,
                     flexShrink: 0
                   }}
                 >
@@ -77,10 +81,12 @@ export const EvidenceTimeline: React.FC<EvidenceTimelineProps> = ({ events }) =>
 
               {/* Event Content Card */}
               <div
+                className={`timeline-event timeline-${evt.severity || 'normal'}`}
                 style={{
                   flex: 1,
-                  backgroundColor: isFlag ? '#FFF8F8' : 'var(--color-bg-subtle)',
-                  border: `1px solid ${isFlag ? 'var(--color-risk-high-border)' : 'var(--color-border-subtle)'}`,
+                  backgroundColor: background,
+                  border: `1px solid ${border}`,
+                  borderLeft: `4px solid ${accent}`,
                   borderRadius: 'var(--radius-md)',
                   padding: '12px 14px',
                   marginBottom: isLast ? 0 : '4px'
@@ -104,7 +110,7 @@ export const EvidenceTimeline: React.FC<EvidenceTimelineProps> = ({ events }) =>
                     >
                       {evt.source_indicator}
                     </span>
-                    <span style={{ fontSize: '11px', color: 'var(--color-text-subtle)' }}>
+                    <span style={{ fontSize: '11px', color: 'var(--color-text-secondary)' }}>
                       {formatDateTime(evt.timestamp)}
                     </span>
                   </div>

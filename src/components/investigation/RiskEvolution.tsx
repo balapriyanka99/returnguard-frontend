@@ -39,7 +39,7 @@ export const RiskEvolution: React.FC<RiskEvolutionProps> = ({ history }) => {
         </span>
       </div>
 
-      <div style={{ position: 'relative', padding: '16px 8px 8px 8px' }}>
+      <div className="risk-evolution-track" style={{ position: 'relative', padding: '16px 8px 8px 8px' }}>
         {/* Connecting Track Line */}
         <div
           style={{
@@ -90,7 +90,7 @@ export const RiskEvolution: React.FC<RiskEvolutionProps> = ({ history }) => {
             }
 
             return (
-              <div
+              <div className="risk-checkpoint"
                 key={item.assessment_id || idx}
                 style={{
                   display: 'flex',
@@ -114,7 +114,7 @@ export const RiskEvolution: React.FC<RiskEvolutionProps> = ({ history }) => {
                     marginBottom: '8px'
                   }}
                 >
-                  {hasRisk ? score : '--'}
+                  {hasRisk ? <><b>{score}</b><span>{band?.toUpperCase()}</span></> : 'UNDETERMINED'}
                 </div>
 
                 {/* Stage Title */}
@@ -123,7 +123,7 @@ export const RiskEvolution: React.FC<RiskEvolutionProps> = ({ history }) => {
                 </div>
 
                 {/* Timestamp */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: '10px', color: 'var(--color-text-subtle)', marginTop: '2px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: '10px', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
                   <Clock size={10} />
                   <span>{formatDateTime(item.assessment_at)}</span>
                 </div>

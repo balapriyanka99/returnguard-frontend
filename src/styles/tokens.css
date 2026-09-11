@@ -1,4 +1,5 @@
 :root {
+  --app-chrome-height: 72px;
   /* Brand & Navy Palette (from ReturnGuard Poster) */
   --color-brand-navy-dark: #0D1B2A;
   --color-brand-navy: #132238;
@@ -42,10 +43,10 @@
   --color-risk-med-border: #FDE68A;
   --color-risk-med-text: #B45309;
 
-  --color-risk-high: #EF4444;
-  --color-risk-high-bg: #FEF2F2;
-  --color-risk-high-border: #FECACA;
-  --color-risk-high-text: #B91C1C;
+  --color-risk-high: #F97316;
+  --color-risk-high-bg: #FFF7ED;
+  --color-risk-high-border: #FDBA74;
+  --color-risk-high-text: #C2410C;
 
   --color-risk-critical-bg: #FFF1F2;
   --color-risk-critical-border: #FDA4AF;

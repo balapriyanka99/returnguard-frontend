@@ -20,7 +20,7 @@ export const mockReturnsList: ReturnSummaryItem[] = [
     status: 'Under review',
     requested_at: '2025-05-12T10:21:00Z',
     assessment_at: '2025-05-15T09:21:00Z',
-    risk: null
+    risk: { score: 82, band: 'critical' }, decision: 'MANUAL_REVIEW', reason_for_attention: 'Confirmed serial mismatch during warehouse inspection'
   },
   {
     return_id: 'RTN-S06-001',
@@ -38,10 +38,10 @@ export const mockReturnsList: ReturnSummaryItem[] = [
       image_url: null
     },
     reason: 'Item missing from package',
-    status: 'Under review',
+    status: 'Awaiting Physical Inspection',
     requested_at: '2025-05-13T14:10:00Z',
     assessment_at: '2025-05-14T16:30:00Z',
-    risk: null
+    risk: { score: 46, band: 'medium' }, decision: 'REQUIRE_INSPECTION', reason_for_attention: 'Physical inspection is required before a decision'
   },
   {
     return_id: 'RTN-L01-003',
@@ -59,10 +59,10 @@ export const mockReturnsList: ReturnSummaryItem[] = [
       image_url: null
     },
     reason: 'Size issue / does not fit',
-    status: 'Requested',
+    status: 'Completed · Approved',
     requested_at: '2025-05-15T08:00:00Z',
     assessment_at: '2025-05-15T08:05:00Z',
-    risk: null
+    risk: { score: 12, band: 'low' }, decision: 'AUTO_APPROVE'
   },
   {
     return_id: 'RTN-LIVE-001',
@@ -83,6 +83,18 @@ export const mockReturnsList: ReturnSummaryItem[] = [
     status: 'Pending Assessment',
     requested_at: '2025-05-15T11:00:00Z',
     assessment_at: null,
-    risk: null
+    risk: null, decision: null
+  },
+  {
+    return_id: 'RTN-COMP-004', source_type: 'controlled', customer: { user_id: 5100, display_name: 'Customer 5100' }, order_id: 6100, order_item_id: 8800,
+    product: { product_id: 32000, name: 'Adidas Ultraboost 22', category: 'Footwear', image_url: null }, reason: 'Size issue / does not fit', status: 'Completed · Approved', requested_at: '2025-05-10T08:00:00Z', assessment_at: '2025-05-11T08:10:00Z', risk: { score: 9, band: 'low' }, decision: 'AUTO_APPROVE'
+  },
+  {
+    return_id: 'RTN-REJ-005', source_type: 'controlled', customer: { user_id: 6200, display_name: 'Customer 6200' }, order_id: 7200, order_item_id: 9900,
+    product: { product_id: 42000, name: 'Premium Camera Body', category: 'Electronics', image_url: null }, reason: 'Item not as described', status: 'Rejected · Escalated', requested_at: '2025-05-09T12:00:00Z', assessment_at: '2025-05-12T12:20:00Z', risk: { score: 94, band: 'critical' }, decision: 'REJECT_OR_ESCALATE', reason_for_attention: 'Evidence inconsistency requires escalation'
+  },
+  {
+    return_id: 'RTN-PEND-006', source_type: 'controlled', customer: { user_id: 7300, display_name: 'Customer 7300' }, order_id: 8300, order_item_id: 11100,
+    product: { product_id: 52000, name: 'Smart Home Security Camera', category: 'Electronics', image_url: null }, reason: 'Stopped working', status: 'Pending Assessment', requested_at: '2025-05-16T09:30:00Z', assessment_at: null, risk: null, decision: null
   }
 ];
